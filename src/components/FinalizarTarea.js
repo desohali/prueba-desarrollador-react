@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Swal from 'sweetalert2';
-import { noExisteTareaMenor } from '../helpers/helpers';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { setEstadoDeTarea } from '../features/tareasSlice';
@@ -21,12 +20,6 @@ const FinalizarTarea = () => {
   });
 
   const subTarea = (buscarTarea?.subTareas || []).find((subTarea) => subTarea?.tarea === Number(tarea));
-  React.useEffect(() => {
-    if (!noExisteTareaMenor(subTarea, listaDeTareas)) {
-      navigate("../");
-    }
-  }, []);
-
 
   if (!buscarTarea) {
     return (

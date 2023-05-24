@@ -2,14 +2,36 @@ import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import TaskIcon from '@mui/icons-material/Task';
-import { noExisteTareaMenor } from '../helpers/helpers';
 import { Alert, Avatar, Button, Card, CardContent, CardHeader, Grid, Typography } from '@mui/material';
+import Swal from 'sweetalert2';
 
 const Tareas = () => {
 
   const navigate = useNavigate();
 
   const listaDeTareas = useSelector((state) => state.tareas.listaDeTareas);
+
+  const navigateFinalizarTarea = React.useCallback((subTarea) => {
+
+    const existeTareaMenor = listaDeTareas.find((tarea) => {
+      return tarea?.subTareas.find(({ tarea, estadoDeTarea }) => {
+        return ((tarea < subTarea?.tarea) && !estadoDeTarea);
+      });
+    });
+
+    if (existeTareaMenor) {
+      const { tarea } = existeTareaMenor?.subTareas.find(({ estadoDeTarea }) => !estadoDeTarea);
+      Swal.fire({
+        icon: 'info',
+        html: `<p>PRIMERO DEBE FINALIZAR LA TAREA #${tarea} !</p>
+        <p>LAS TAREAS DEBEN SER FINALIZADAS EN ORDEN, GRACIAS.</p>`,
+      });
+      return;
+    }
+
+    navigate(`./${subTarea?.tarea}`);
+
+  }, []);
 
 
   return (
@@ -37,9 +59,7 @@ const Tareas = () => {
                 <CardContent>
                   {subTareas.filter((subTarea) => !subTarea?.estadoDeTarea).map((subTarea) => (
                     <Button key={subTarea?.tarea} fullWidth color="info" variant="contained" sx={{ mb: 2 }} onClick={() => {
-                      if (noExisteTareaMenor(subTarea, listaDeTareas)) {
-                        navigate(`./${subTarea?.tarea}`);
-                      }
+                      navigateFinalizarTarea(subTarea);
                     }}>
                       Hacer tarea #{subTarea?.tarea}
                     </Button>
