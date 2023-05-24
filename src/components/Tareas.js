@@ -10,6 +10,15 @@ const Tareas = () => {
   const navigate = useNavigate();
 
   const listaDeTareas = useSelector((state) => state.tareas.listaDeTareas);
+  React.useEffect(() => {
+    Swal.fire({
+      type: 'success',
+      allowOutsideClick: false,
+      title: 'Success!',
+      text: 'You are welcome!',
+    })
+  }, [])
+  
 
   const navigateFinalizarTarea = React.useCallback((subTarea) => {
 
