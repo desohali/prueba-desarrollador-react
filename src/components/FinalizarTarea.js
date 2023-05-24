@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Swal from 'sweetalert2';
+import swal from 'sweetalert';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { setEstadoDeTarea } from '../features/tareasSlice';
@@ -52,10 +52,12 @@ const FinalizarTarea = () => {
           <CardContent>
             <Button fullWidth color="info" variant="contained" sx={{ mb: 2 }} onClick={() => {
               dispatch(setEstadoDeTarea({ tarea: buscarTarea, subTarea }));
-              Swal.fire({
-                icon: 'success',
-                html: `<p>LA TAREA #${subTarea?.tarea} FUE FINALIZADA CON EXITO !</p>`,
-              }).then(() => {
+
+              swal(
+                `LA TAREA #${subTarea?.tarea} FUE FINALIZADA CON EXITO !`,
+                "",
+                "success"
+              ).then(() => {
                 navigate("../");
               });
             }}>

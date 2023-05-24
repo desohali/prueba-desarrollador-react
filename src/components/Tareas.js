@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import TaskIcon from '@mui/icons-material/Task';
 import { Alert, Avatar, Button, Card, CardContent, CardHeader, Grid, Typography } from '@mui/material';
-import Swal from 'sweetalert2';
 import swal from 'sweetalert';
 
 const Tareas = () => {
@@ -11,10 +10,6 @@ const Tareas = () => {
   const navigate = useNavigate();
 
   const listaDeTareas = useSelector((state) => state.tareas.listaDeTareas);
-  React.useEffect(() => {
-    swal("Good job!", "You clicked the button!", "success");
-  }, [])
-  
 
   const navigateFinalizarTarea = React.useCallback((subTarea) => {
 
@@ -26,11 +21,11 @@ const Tareas = () => {
 
     if (existeTareaMenor) {
       const { tarea } = existeTareaMenor?.subTareas.find(({ estadoDeTarea }) => !estadoDeTarea);
-      Swal.fire({
-        icon: 'info',
-        html: `<p>PRIMERO DEBE FINALIZAR LA TAREA #${tarea} !</p>
-        <p>LAS TAREAS DEBEN SER FINALIZADAS EN ORDEN, GRACIAS.</p>`,
-      });
+      swal(
+        `PRIMERO DEBE FINALIZAR LA TAREA #${tarea} !`,
+        "LAS TAREAS DEBEN SER FINALIZADAS EN ORDEN, GRACIAS.",
+        "info"
+      );
       return;
     }
 
