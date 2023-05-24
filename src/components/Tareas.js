@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import TaskIcon from '@mui/icons-material/Task';
 import { Alert, Avatar, Button, Card, CardContent, CardHeader, Grid, Typography } from '@mui/material';
 import Swal from 'sweetalert2';
+import swal from 'sweetalert';
 
 const Tareas = () => {
 
@@ -11,12 +12,7 @@ const Tareas = () => {
 
   const listaDeTareas = useSelector((state) => state.tareas.listaDeTareas);
   React.useEffect(() => {
-    Swal.fire({
-      type: 'success',
-      allowOutsideClick: false,
-      title: 'Success!',
-      text: 'You are welcome!',
-    })
+    swal("Good job!", "You clicked the button!", "success");
   }, [])
   
 
